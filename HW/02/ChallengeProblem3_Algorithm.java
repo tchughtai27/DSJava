@@ -14,21 +14,22 @@
         System.out.println("Enter a positive integer: ");
         int x = in.nextInt();
 
-        if (isPrime(x)) {
+        if (isPrime(x)) { //calls isPrime function from below
             System.out.println("Prime");
         } else {
             System.out.println("Not prime");
         }
     }
-    public static boolean isPrime(int x) {
+    //isPrime function
+    public static boolean isPrime(int x) {  //this line means isPrime of int x has to return a boolean (true false)
         if (x<2) {
-            return false;
+            return false; //1 is not prime
         } 
-        for (int i = 2; i <= Math.sqrt(x); i++) {
+        for (int i = 2; i <= Math.sqrt(x); i++) { //checking for factors from 2, to the sqrt of x
             if (x % i == 0) {
-                return false; 
+                return false; //if its divisble by i, its not prime
             }
         }
-        return true;
+        return true; // no divisors found means its prime
     }   
  }
