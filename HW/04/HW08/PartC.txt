@@ -1,0 +1,88 @@
+/*
+ * Talha Chughtai HW08 PartC
+ * 10/25
+ */
+
+PROBLEM NUMBER 1
+n = 1;
+while (n < 13){
+   System.out.print(n + " ");
+   n = n + 3;
+}
+start n = 1
+n < 13 is true
+output is 1
+n = 4
+n < 13 is true
+output is 1 4
+n = 7
+n < 13 is true
+output is 1 4 7
+n = 10
+n < 13 is true
+output is 1 4 7 10
+n = 13
+n < 13 is false
+output would stay at 1 4 7 10
+
+PROBLEM NUMBER 2
+n = 1;
+while (n < 13){
+   n = n + 3;
+   System.out.print(n + " ");
+}
+
+n = 1
+n < 13 is true
+n + 3 = 4
+output is 4
+n < 13 is true
+n = 7
+output is 4 7
+n < 13 is true
+n = 10
+output is 4 7 10
+n < 13
+n = 13
+4 7 10 13
+n is not < 13
+output would just stay at 4 7 10 13
+
+PROBLEM NUMBER 3
+for (n = 1; n < 4; n++) {
+    System.out.print(n + " ");
+ }
+
+n = 1
+n < 4
+output is 1
+n = 2
+n < 4
+output is 1 2
+n = 3
+n < 4
+output is 1 2 3
+n = 4
+n is not < 4
+output stays at 1 2 3 
+
+PROBLEM NUMBER 4
+for (n = 1; n <= 4; n++) {
+    System.out.print(n + " ");
+ }
+
+n = 1
+n <= 4
+output is 1
+n = 2
+n <= 4
+output is 1 2
+n = 3
+n <= 4
+output is 1 2 3
+n = 4
+n <=4 
+output is 1 2 3 4
+n = 5
+n is not <= 4
+output stays at 1 2 3 4

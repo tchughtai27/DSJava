@@ -1,3 +1,10 @@
+/*
+ * Talha Chughtai AT05 PartA
+ * 10/25
+ */
+
+
+
 import java.util.Random;
 
 public class PartA {
