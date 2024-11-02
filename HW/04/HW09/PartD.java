@@ -11,7 +11,7 @@ public class PartD {
         Scanner scanner = new Scanner(System.in);
         Die die = new Die();  
 
-        System.out.println("Welcome to the Virtual Die Simulator!");
+        System.out.println("Welcome!");
         System.out.println("Enter 'r' to roll the die, 'd' to display the current value, or 'q' to quit.");
 
         while (true) {
@@ -20,7 +20,7 @@ public class PartD {
 
             switch (input) {
                 case "r":
-                    die.roll();  // Roll the die
+                    die.roll(); 
                     System.out.println("You rolled a " + die.getCurrentValue() + "!");
                     break;
                 case "d":
@@ -59,7 +59,7 @@ class Die {
     
     public String getAsciiRepresentation() {
         return switch (currentValue) {
-            case 1 -> " _______\n|       |\n|   *   |\n|_______|";
+            case 1 -> " _______\n|       |\n|   *   |\n|_______|"; // Is this the way we were suppposed to do this?
             case 2 -> " _______\n| *     |\n|       |\n|_____*_|";
             case 3 -> " _______\n| *     |\n|   *   |\n|_____*_|";
             case 4 -> " _______\n| *   * |\n|       |\n|_*___*_|";
