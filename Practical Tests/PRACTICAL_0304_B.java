@@ -4,7 +4,7 @@ public class PRACTICAL_0304_B {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
 
-        // Prompt the user to enter three integers
+        
         System.out.print("Enter the first integer: ");
         int num1 = in.nextInt();
 
