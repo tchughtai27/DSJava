@@ -15,20 +15,22 @@ public class Card {
     private Rank rank;
 
     // Unicode symbols for suits 
-    //----------------------------------------NEEDS FIX------------------------------------------------
+    
     //SUITS SHOW AS QUESTION MARKS
-    private static final char SPADE_SYMBOL = '\u2660';    // ♠ \u2660
-    private static final char HEART_SYMBOL = '♡';    // ♡ \u2661
-    private static final char CLUB_SYMBOL = '♣';     // ♣ \u2662
-    private static final char DIAMOND_SYMBOL = '♢';  // ♢ \u2663
+    //You know the story here Mr. Eng, replaced with letters instead. 
+    
+    private static final char SPADE_SYMBOL = 'S';    // ♠ \u2660
+    private static final char HEART_SYMBOL = 'H';    // ♡ \u2661
+    private static final char CLUB_SYMBOL = 'C';     // ♣ \u2662
+    private static final char DIAMOND_SYMBOL = 'D';  // ♢ \u2663
 
    
 
     // Assigns random suit and rank
     public Card() {
         Random random = new Random();
-        this.suit = Suit.values()[random.nextInt(Suit.values().length)];
-        this.rank = Rank.values()[random.nextInt(Rank.values().length)];
+        this.suit = Suit.values()[random.nextInt(Suit.values().length)]; // From what I understood about this. is this.suit is specifying that the variable suit belongs to the current instance of the class.  
+        this.rank = Rank.values()[random.nextInt(Rank.values().length)]; // The part in [] says that it chooses a random number from 0 to the #of elements in each enum, and chooses the corresponding value in the enum.
     }
 
     // Accepts suit and rank
@@ -51,8 +53,8 @@ public class Card {
     public String getFace() {
         // Get suit symbol
         char suitSymbol;
-        switch (suit) {
-            case SPADE -> suitSymbol = SPADE_SYMBOL;
+        switch (suit) { //based on the value of suit, the switch statement selects a suitSymbol. 
+            case SPADE -> suitSymbol = SPADE_SYMBOL; //searched how to use ->, its easier than returning every time for each case. 
             case HEART -> suitSymbol = HEART_SYMBOL;
             case CLUB -> suitSymbol = CLUB_SYMBOL;
             case DIAMOND -> suitSymbol = DIAMOND_SYMBOL;
@@ -61,8 +63,8 @@ public class Card {
 
         // Get rank character
         String rankStr;
-        switch (rank) {
-            case TWO -> rankStr = "2"; //searched how to use ->, its easier than returning every time
+        switch (rank) { //same logic as other switch statement
+            case TWO -> rankStr = "2"; 
             case THREE -> rankStr = "3";
             case FOUR -> rankStr = "4";
             case FIVE -> rankStr = "5";
@@ -77,21 +79,22 @@ public class Card {
             case ACE -> rankStr = "A";
             default -> throw new IllegalStateException("Unexpected value: " + rank);
         }
-
-        return suitSymbol + rankStr; //returns the symbol and string
+        
+        return rankStr + " of " + suitSymbol; //returns the symbol and string
+        //It returns like this because of the unicode issue. 
     }
 
     // Main method for Card class
     public static void main(String[] args) {
         
-        // Create a specific card (Queen of Hearts) and print its face value
-        Card queenOfHearts = new Card(Suit.HEART, Rank.QUEEN);
+        // Create a specific card (Q of Hearts) and print value
+        Card queenOfHearts = new Card(Suit.HEART, Rank.QUEEN); //defines queenOfHearts
         System.out.println("The following card should be the queen of hearts:");
-        System.out.println("  " + queenOfHearts.getFace());
+        System.out.println("  " + queenOfHearts.getFace()); //queen of hearts printed
 
         // Generate and print 10 random cards
         System.out.println("10 random cards...");
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) { //for loop for 10 cards
             Card randomCard = new Card();
             System.out.println("  " + randomCard.getFace());
         }

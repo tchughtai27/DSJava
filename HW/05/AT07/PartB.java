@@ -1,3 +1,9 @@
+/*
+ * Talha Chughtai
+ * ATCS
+ * HW AT07 Part B
+ * 11/9
+ */
 public class PartB {
     private double x;
     private double y;
