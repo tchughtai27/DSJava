@@ -10,6 +10,7 @@ public class Card {
         TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING, ACE
     }
 
+
     // Private member variables for suit and rank
     private Suit suit;
     private Rank rank;
@@ -19,10 +20,10 @@ public class Card {
     //SUITS SHOW AS QUESTION MARKS
     //You know the story here Mr. Eng, replaced with letters instead. 
     
-    private static final char SPADE_SYMBOL = 'S';    // ♠ \u2660
-    private static final char HEART_SYMBOL = 'H';    // ♡ \u2661
-    private static final char CLUB_SYMBOL = 'C';     // ♣ \u2662
-    private static final char DIAMOND_SYMBOL = 'D';  // ♢ \u2663
+    private static final char SPADE_SYMBOL = '\u2660';    // ♠ \u2660
+    private static final char HEART_SYMBOL = '\u2661';    // ♡ \u2661
+    private static final char CLUB_SYMBOL = '\u2662';     // ♣ \u2662
+    private static final char DIAMOND_SYMBOL = '\u2663';  // ♢ \u2663
 
    
 
@@ -58,7 +59,7 @@ public class Card {
             case HEART -> suitSymbol = HEART_SYMBOL;
             case CLUB -> suitSymbol = CLUB_SYMBOL;
             case DIAMOND -> suitSymbol = DIAMOND_SYMBOL;
-            default -> throw new IllegalStateException("Unexpected value: " + suit);
+            default -> throw new IllegalStateException("Unexpected value: " + suit); //throws an exception if none of the cases
         }
 
         // Get rank character
@@ -77,10 +78,10 @@ public class Card {
             case QUEEN -> rankStr = "Q";
             case KING -> rankStr = "K";
             case ACE -> rankStr = "A";
-            default -> throw new IllegalStateException("Unexpected value: " + rank);
+            default -> throw new IllegalStateException("Unexpected value: " + rank); //thorwing an exception if none of the cases are satisfied
         }
         
-        return rankStr + " of " + suitSymbol; //returns the symbol and string
+        return suitSymbol + rankStr; //returns the symbol and string
         //It returns like this because of the unicode issue. 
     }
 

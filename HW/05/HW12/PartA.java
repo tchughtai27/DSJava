@@ -1,3 +1,7 @@
+/*
+ * Talha Chughtai 11/14
+ * ATCS HW12 PartA
+ */
 import java.util.Scanner; //Scanner was not imported. 
 
 public class PartA
