@@ -1,3 +1,7 @@
+/*
+ * Talha Chughtai 11/14
+ * ATCS HW12 PartC
+ */
 public class PartC {
     
     // Method to count vowels in the given string
