@@ -1,26 +1,39 @@
+/*
+ * Talha Chughtai
+ * 11/16
+ * ATCS HW13 PartB
+ */
+
 import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.*;
 
 public class PartB {
     /*
-     * Change the following method to customize
-     * what is drawn in the JFrame.
+     * Draws a grid of alternating blue and red tiles.
      */
     public static void draw(Graphics g) {
-        // blue squares
-        for (int j = 0; j<4; j++) {
-            for (int i = 0; i < 4; i++) {
-            if (i % 2 == 0) {
-                g.setColor(Color.BLUE);
-            } else {
-                g.setColor(Color.RED);
-            }
-            
-        }
+        // Defining these here make the entire process easier
+        final int TILE_SIZE = 100; // Each tile is 100x100 pixels
+        final int GRID_SIZE = 4;   // 4 rows and 4 columns
         
-    }
-
+        for (int row = 0; row < GRID_SIZE; row++) {
+            for (int col = 0; col < GRID_SIZE; col++) {
+                
+                int x = col * TILE_SIZE; // X-coordinate of tile
+                int y = row * TILE_SIZE; // Y-coordinate of tile
+                
+                // Alternate colors based on row and column
+                if ((row + col) % 2 == 0) {
+                    g.setColor(Color.BLUE);
+                } else {
+                    g.setColor(Color.RED);
+                }
+                
+                // Draw the tile
+                g.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+            }
+        }
     }
 
     public static enum OS {
@@ -91,5 +104,4 @@ public class PartB {
         System.out.println("Frame Insets : " + frame.getInsets());
         System.out.println("Content Size : " + frame.getContentPane().getSize());
     }
-
 }
