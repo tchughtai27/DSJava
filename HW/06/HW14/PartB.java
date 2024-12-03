@@ -9,7 +9,7 @@ public class PartB {
 
         double sum = 0; // Var to store the sum of the elements
 
-        // Enhanced for loop (correct name?) to iterate the array
+        // Enhanced for loop to iterate the array
         for (double num : numbers) {
             System.out.println(num); // Print each element out
             sum += num; // Add the current element to the sum
