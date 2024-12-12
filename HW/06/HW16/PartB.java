@@ -1,3 +1,8 @@
+/*
+ * Talha C
+ * ATCS Due 12/11
+ * HW16
+ */
 public class PartB {
     public static void main(String[] args) {
         // Test case 1: Direct values
