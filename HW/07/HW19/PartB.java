@@ -15,10 +15,10 @@ public class PartB {
                 total += score;
             }
 
-            // Calculate average
+            //  calculate average
             double average = total / quizScores.size();
 
-            // Print formatted quiz scores to the console
+            // Print formatted quiz scores
             for (int i = 0; i < quizScores.size(); i++) {
                 System.out.printf("Quiz %03d: %6.2f%n", i, quizScores.get(i));
             }
