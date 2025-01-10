@@ -16,7 +16,7 @@ public class PartB {
 
         try (Scanner in = new Scanner(new File("characters.txt"))) {
             // Read the file character by character
-            while (in.hasNextLine()) {
+            while (in.hasNextLine()) { // i feel like theres an easier way but it still works so
                 String line = in.nextLine();
                 for (char c : line.toCharArray()) {
                     totalCharacters++;
@@ -28,15 +28,15 @@ public class PartB {
                 }
             }
 
-            // Print the file content
+            // Print content
             System.out.println("Contents of the file:");
-            try (Scanner in2 = new Scanner(new File("characters.txt"))) {
-                while (in2.hasNextLine()) {
-                    System.out.println(in2.nextLine());
+            try (Scanner in_2 = new Scanner(new File("characters.txt"))) {
+                while (in_2.hasNextLine()) {
+                    System.out.println(in_2.nextLine());
                 }
             }
 
-            // Display counts
+            // Display
             System.out.println("\nStatistics:");
             System.out.println("Total characters scanned: " + totalCharacters);
             System.out.println("Total letters scanned: " + totalLetters);
