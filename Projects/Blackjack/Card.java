@@ -1,7 +1,7 @@
 import java.util.Random;
 
 public class Card {
-    // Enumerated types for Suit and Rank
+    // Enum types for Suit and Rank
     public enum Suit {
         SPADE, HEART, CLUB, DIAMOND
     }
@@ -10,17 +10,17 @@ public class Card {
         TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING, ACE
     }
 
-    // Private member variables for suit and rank
+    // Private member variables suit and rank
     private Suit suit;
     private Rank rank;
 
-    // Unicode symbols for suits
+    // Unicode symbols
     private static final char SPADE_SYMBOL = '\u2660'; // ♠
     private static final char HEART_SYMBOL = '\u2661'; // ♡
     private static final char CLUB_SYMBOL = '\u2662'; // ♣
     private static final char DIAMOND_SYMBOL = '\u2663'; // ♢
 
-    // Assigns random suit and rank
+    // Random suit and rank
     public Card() {
         Random random = new Random();
         this.suit = Suit.values()[random.nextInt(Suit.values().length)]; // Select a random suit
@@ -77,6 +77,8 @@ public class Card {
         return suitSymbol + rankStr; // Return symbol and rank
     }
 
+
+    //THIS WAS PART OF PREVIOUS ASSIGNMENT. 
     // Main method for Card class
     public static void main(String[] args) {
         // Create a specific card (Q of Hearts) and print value
