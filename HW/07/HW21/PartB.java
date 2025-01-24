@@ -2,7 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class PartB {
+public class PartB { // Pretty similar to PartA
     public static void main(String[] args) {
         // Open a scanner to read input
         Scanner userScanner = new Scanner(System.in);
