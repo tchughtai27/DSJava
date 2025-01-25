@@ -1,36 +1,54 @@
+
+/*
+ * Talha C
+ * ATCS
+ * HW24
+ */
 import java.util.Scanner;
 
 public class Counter {
-    public int look() {
-        return total;
+    private int totalCake = 0;
+    private int totalPie = 0;
+
+    public void addCake() {
+        totalCake++;
     }
 
-    public int pie() {
-        this.total_pie = this.total_pie + 1;
-        return total_pie;
+    public void addPie() {
+        totalPie++;
     }
 
-    public int cake() {
-        this.total_cake = this.total_cake + 1;
-        return total_cake;
+    public int getTotalCake() {
+        return totalCake;
     }
 
-    private int total = 0;
-    private int total_cake = 0;
-    private int total_pie = 0;
+    public int getTotalPie() {
+        return totalPie;
+    }
 
     public static void main(String[] args) {
-        Counter a = new Counter();
+        Counter z = new Counter();
         Scanner in = new Scanner(System.in);
-        System.out.println("Enter 'c' for cake, 'p' for pie, and 'q' to quit");
-        String s = in.nextLine();
-        if (in.hasNext("c")) {
-            a.cake();
-        } else if (in.hasNext("p")) {
-            a.pie();
-        } else {
-            System.out.println("Ending program.");
+        String input;
+
+        System.out.println("Enter 'c' for cake, 'p' for pie, and 'q' to quit:");
+
+        while (true) {
+            input = in.nextLine().toLowerCase(); // Read input and convert to lowercase to match with respective letter
+
+            if (input.equals("q")) {
+                break; // Exit the loop if user enters q
+            } else if (input.equals("c")) {
+                z.addCake(); // Cake counter
+            } else if (input.equals("p")) {
+                z.addPie(); // Pie counter
+            } else {
+                System.out.println("Invalid input. Please enter 'c', 'p', or 'q'.");
+            }
         }
 
+        // Display the results after q is hit
+        System.out.println("Total votes for cake: " + z.getTotalCake());
+        System.out.println("Total votes for pie: " + z.getTotalPie());
     }
 }

@@ -1,3 +1,8 @@
+/*
+ * Talha C
+ * HW23
+ * ATCS
+ */
 import java.util.Scanner;
 
 public class PartA {

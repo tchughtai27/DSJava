@@ -1,13 +1,11 @@
-public static int getInt() {
-    try {
-        return 1;
-    } catch (Exception e) {
-        return 2;
-    } finally {
-        return 3;
-    }
-}
+/*
+ * Talha C
+ * HW23
+ * ATCS
+ */
 
-public static void main(String[] args) {
-    System.out.println(getInt());
-}
+ /*
+  Try block will attempt to return 1
+  The finally does the try and catch, which will not do return 1 and 2, instead priorotizing return 3. 
+  Final Answer: 3
+*/
