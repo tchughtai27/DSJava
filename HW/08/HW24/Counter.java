@@ -50,5 +50,7 @@ public class Counter {
         // Display the results after q is hit
         System.out.println("Total votes for cake: " + z.getTotalCake());
         System.out.println("Total votes for pie: " + z.getTotalPie());
+
+        in.close();
     }
 }
