@@ -1,3 +1,8 @@
+/*
+ * Talha Chughtai
+ * ATCS
+ * MOWER PROJECT PART A
+ */
 package mow;
 
 import java.util.Scanner;
@@ -83,3 +88,7 @@ public class Yard {
         in.close();
     }
 }
+
+/*
+ *  Tested, should work!
+ */
