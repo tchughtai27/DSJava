@@ -1,0 +1,8 @@
+Suppose you are to design an inheritance hierarchy with the following classes, Snake, Crocodile, Reptile, and Turtle.  
+Which of these items is the superclass and why?
+Snake
+Turtle
+Reptile
+Crocodile
+
+C. Reptile would be the superclass because it is broader and would encompass the other subclasses. 
