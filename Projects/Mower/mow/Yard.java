@@ -1,62 +1,51 @@
-/*
- * Talha Chughtai
- * ATCS
- * MOWER PROJECT PART A
- */
 package mow;
 
-import java.util.Scanner;
-
-// Class that should represent a yard with a lawn  red brick borders
 public class Yard {
-    private char[][] yard; // 2D array representing the yard
-    private int lawnHeight; // Height of the lawn wihtout border
-    private int lawnWidth; // Width of the lawn without border
+    private char[][] yard;
+    private int lawnHeight;
+    private int lawnWidth;
 
-    // Constructor that initializes the yard with given height and width
     public Yard(int height, int width) {
         this.lawnHeight = height;
         this.lawnWidth = width;
-        int totalHeight = height + 2; // Including borders
-        int totalWidth = width + 2; // Including borders
+        int totalHeight = height + 2; // Adding borders
+        int totalWidth = width + 2;
 
         yard = new char[totalHeight][totalWidth];
-
-        // Loop through the yard for the red brick borders and unmowed grass
         for (int i = 0; i < totalHeight; i++) {
             for (int j = 0; j < totalWidth; j++) {
                 if (i == 0 || i == totalHeight - 1 || j == 0 || j == totalWidth - 1) {
-                    yard[i][j] = 'R'; // Represents red brick borders
+                    yard[i][j] = 'R'; // Red brick border
                 } else {
-                    yard[i][j] = '+'; // Represents unmowed grass
+                    yard[i][j] = '+'; // Unmowed grass
                 }
             }
         }
     }
 
-    // Method to get the > at a specific cell in the yard
     public char getCell(int row, int col) {
         return yard[row][col];
     }
 
-    // Method to set a specific cell in the yard
     public void setCell(int row, int col, char value) {
         yard[row][col] = value;
     }
 
-    // Method to get the height of the lawn
-    public int getLawnHeight() {
-        return lawnHeight;
+    public boolean hasUnmowedGrass() {
+        for (int i = 1; i <= lawnHeight; i++) {
+            for (int j = 1; j <= lawnWidth; j++) {
+                if (yard[i][j] == '+') {
+                    return true; // Found unmowed grass
+                }
+            }
+        }
+        return false;
     }
 
-    // Method to get the width of the lawn
-    public int getLawnWidth() {
-        return lawnWidth;
-    }
-
-    // Method to print the current yard
-    public void printYard() {
-        for (char[] row : yard) {
+    public void printYard(Mower mower) {
+        char[][] yardCopy = copyYard();
+        yardCopy[mower.getRow()][mower.getCol()] = getDirectionArrow(mower.getDirection());
+        for (char[] row : yardCopy) {
             for (char cell : row) {
                 System.out.print(cell);
             }
@@ -64,31 +53,46 @@ public class Yard {
         }
     }
 
-    // Method to clear the console screen
+    private char[][] copyYard() {
+        char[][] copy = new char[yard.length][yard[0].length];
+        for (int i = 0; i < yard.length; i++) {
+            System.arraycopy(yard[i], 0, copy[i], 0, yard[i].length);
+        }
+        return copy;
+    }
+
+    private char getDirectionArrow(int direction) {
+        switch (direction) {
+            case 0:
+                return '^';
+            case 1:
+                return '>';
+            case 2:
+                return 'v';
+            case 3:
+                return '<';
+        }
+        return ' ';
+    }
+
+    public static void delay(int ms) {
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
 
-    // Main method to interact with the user and create a yard instance
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
+    public int getLawnHeight() {
+        return lawnHeight;
+    }
 
-        // Ask user for lawn dimensions
-        System.out.print("Enter the height of the lawn: ");
-        int height = in.nextInt();
-
-        System.out.print("Enter the width of the lawn: ");
-        int width = in.nextInt();
-
-        clearScreen(); // Clears the console screen
-        Yard yard = new Yard(height, width); // Creates a Yard object with given dimensions
-
-        yard.printYard(); // Display the yard
-        in.close();
+    public int getLawnWidth() {
+        return lawnWidth;
     }
 }
-
-/*
- *  Tested, should work!
- */
