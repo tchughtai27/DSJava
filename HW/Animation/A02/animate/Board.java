@@ -35,11 +35,11 @@ public class Board extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
 
         if (img != null) {
-            // Target size for 1/4 of content area
+            // 1/4 of content area
             double targetWidth = B_WIDTH / 2.0;
             double targetHeight = B_HEIGHT / 2.0;
 
-            // Calculate correct scaling factor while maintaining aspect ratio
+            // Calculate correct scaling factor 
             double scaleX = targetWidth / img.getWidth();
             double scaleY = targetHeight / img.getHeight();
             double scale = Math.min(scaleX, scaleY); // Keep proportions correct
@@ -48,11 +48,11 @@ public class Board extends JPanel {
             double scaledWidth = img.getWidth() * scale;
             double scaledHeight = img.getHeight() * scale;
 
-            // Position image in lower-right corner
+            // Position in right corner
             double x = B_WIDTH - scaledWidth;
             double y = B_HEIGHT - scaledHeight;
 
-            // Apply AffineTransform
+            // AffineTransform
             AffineTransform at = new AffineTransform();
             at.translate(x, y);
             at.scale(scale, scale);
