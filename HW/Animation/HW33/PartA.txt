@@ -1,0 +1,2 @@
+1. d because you can't instantiate an interface. They need to be implemented by a class, not directly instantiated. 
+2. b because resize() is a part of the resizable interface, whihc is the reference type of the var 
