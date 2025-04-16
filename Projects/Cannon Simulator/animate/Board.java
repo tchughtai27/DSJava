@@ -1,62 +1,56 @@
-package animate;
-
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import javax.swing.JPanel;
+import java.awt.event.*;
 
-public class Board extends JPanel implements KeyListener {
-    private final int B_WIDTH = 1440;
-    private final int B_HEIGHT = 720;
-    private final int FLOOR = B_HEIGHT - 50;
-
+public class Board extends JPanel implements ActionListener, KeyListener {
+    private Timer timer;
     private Cannon cannon;
+    private CannonBall cannonBall;
+    private double power = 20; // initial launch speed
 
     public Board() {
-        setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
+        setPreferredSize(new Dimension(800, 600));
+        setBackground(Color.WHITE);
+
+        cannon = new Cannon(100, 500); // x and y position in pixels
+        cannonBall = new CannonBall();
+
+        timer = new Timer(16, this); // ~60 FPS
+        timer.start();
+
         setFocusable(true);
         addKeyListener(this);
-
-        // Initialize cannon 60px from left, 60px above floor
-        cannon = new Cannon(60, FLOOR - 60);
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-
-        // Sky background
-        g2d.setColor(new Color(0, 255, 255));
-        g2d.fillRect(0, 0, B_WIDTH, B_HEIGHT);
-
-        // Green ground
-        g2d.setColor(new Color(0, 255, 0));
-        g2d.fillRect(0, FLOOR, B_WIDTH, B_HEIGHT - FLOOR);
-
-        // Ground line
-        g2d.setColor(Color.BLACK);
-        g2d.drawLine(0, FLOOR, B_WIDTH, FLOOR);
-
-        // Draw cannon
         cannon.draw(g2d);
+        cannonBall.draw(g2d); // Still works since draw() in CannonBall takes Graphics
     }
 
     @Override
+    public void actionPerformed(ActionEvent e) {
+        cannonBall.updatePosition(0.016); // 16 ms per frame
+        repaint();
+    }
+
+    // Optional: Arrow key controls to change cannon angle
+    @Override
     public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_LEFT -> {
-                cannon.rotateLeft();
-                repaint();
+        int code = e.getKeyCode();
+
+        if (code == KeyEvent.VK_UP) {
+            cannon.setAngle(cannon.getAngle() - 2);
+        } else if (code == KeyEvent.VK_DOWN) {
+            cannon.setAngle(cannon.getAngle() + 2);
+        } else if (code == KeyEvent.VK_SPACE) {
+            if (cannonBall.getState() == CannonBall.IDLE) {
+                cannon.fire(); // plays sound
+                cannon.fire(cannonBall, power); // this method doesn't exist yet – read below!
             }
-            case KeyEvent.VK_RIGHT -> {
-                cannon.rotateRight();
-                repaint();
-            }
-            case KeyEvent.VK_SPACE -> {
-                cannon.fire();
-                repaint();
-            }
+
         }
     }
 

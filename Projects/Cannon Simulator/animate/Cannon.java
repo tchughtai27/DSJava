@@ -2,8 +2,8 @@ package animate;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import javax.sound.sampled.*;
 import javax.swing.*;
 
@@ -19,30 +19,53 @@ public class Cannon {
     public Cannon(double x, double y) {
         this.x = x;
         this.y = y;
-        this.angle = 45; // default angle
-        this.muzzleVelocity = 50; // default velocity
+        this.angle = 45;
+        this.muzzleVelocity = 50;
 
         loadImage();
         loadSounds();
     }
 
+    public void fire(CannonBall ball, double power) {
+        ball.launch(angle, power, x + 15, y); // x + 15 is near the barrel tip
+    }
+
     private void loadImage() {
-        ImageIcon ii = new ImageIcon("media/sm_cannon.png");
-        image = ii.getImage();
+        try {
+            // Relative path to the image
+            URL imageURL = getClass().getResource("../media/sm_cannon.png");
+            if (imageURL != null) {
+                image = new ImageIcon(imageURL).getImage();
+            } else {
+                System.out.println("Cannon image not found.");
+            }
+        } catch (Exception e) {
+            System.out.println("Failed to load cannon image.");
+        }
+    }
+
+    public void setAngle(double angle) {
+        this.angle = Math.max(0, Math.min(90, angle));
     }
 
     private void loadSounds() {
-        wheelSound = loadSound("media/wheel.wav");
-        fireSound = loadSound("media/cannon.wav");
+        wheelSound = loadSound("../media/wheel.wav");
+        fireSound = loadSound("../media/cannon.wav");
     }
 
     private Clip loadSound(String path) {
         try {
-            File soundFile = new File(path);
-            AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
+            URL soundURL = getClass().getResource(path);
+            if (soundURL == null) {
+                System.out.println("Sound file not found: " + path);
+                return null;
+            }
+
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundURL);
             Clip clip = AudioSystem.getClip();
             clip.open(audioIn);
             return clip;
+
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             System.out.println("Error loading sound: " + path);
             return null;
@@ -79,8 +102,6 @@ public class Cannon {
         if (image != null) {
             AffineTransform at = new AffineTransform();
 
-            // pivot point of image is at (15, 25.5) in image coordinates
-            int imgWidth = image.getWidth(null);
             int imgHeight = image.getHeight(null);
             double pivotX = 15;
             double pivotY = imgHeight / 2.0;
@@ -89,11 +110,9 @@ public class Cannon {
             at.rotate(Math.toRadians(-angle), pivotX, pivotY);
             g2d.drawImage(image, at, null);
 
-            // Draw the pivot circle (blue)
             g2d.setColor(Color.BLUE);
             g2d.fillOval((int) (x + pivotX - 5), (int) (y + pivotY - 5), 10, 10);
 
-            // Draw the base (pink triangle with black outline)
             int baseX = (int) (x + pivotX);
             int baseY = (int) (y + pivotY);
             Polygon triangle = new Polygon();
