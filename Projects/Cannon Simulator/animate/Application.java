@@ -14,8 +14,8 @@ public class Application extends JFrame {
         this.setLocationRelativeTo(null);
 
         // Set size to match board's preferred size
-        int height = (int) board.getPreferredSize().getHeight() + 30; // bar height
-        int width = (int) board.getPreferredSize().getWidth() + 14; // borders
+        int height = (int) board.getPreferredSize().getHeight() + 30; // + bar height
+        int width = (int) board.getPreferredSize().getWidth() + 14; // + borders
         this.setSize(width, height);
     }
 

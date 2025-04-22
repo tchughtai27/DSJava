@@ -1,57 +1,63 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+package animate;
 
-public class Board extends JPanel implements ActionListener, KeyListener {
-    private Cannon cannon;
-    private CannonBall cannonball;
-    private Timer timer;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import javax.swing.JPanel;
+
+public class Board extends JPanel implements KeyListener {
+    private final int B_WIDTH = 1440; // Panel width
+    private final int B_HEIGHT = 720; // Panel height
+    private final int FLOOR = B_HEIGHT - 50; // Position of the ground (50 pixels above the bottom)
+
+    private Cannon cannon; // Add cannon to the board
 
     public Board() {
-        setPreferredSize(new Dimension(800, 500));
-        setBackground(Color.CYAN); // Sky color
-        setFocusable(true);
-        addKeyListener(this);
+        setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
+        setFocusable(true); // Allow this panel to receive keyboard input
+        addKeyListener(this); // Add the KeyListener to handle key events
 
-        cannon = new Cannon(100, 450); // Cannon at bottom left
-        cannonball = new CannonBall();
-
-        timer = new Timer(16, this); // ~60 FPS
-        timer.start();
+        cannon = new Cannon(60, FLOOR - 60); // Instantiate the cannon at the bottom-left corner
     }
 
     @Override
-    protected void paintComponent(Graphics g) {
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
 
-        // Draw background
-        g.setColor(Color.CYAN); // Sky
-        g.fillRect(0, 0, getWidth(), getHeight());
+        // Fill the sky
+        g2d.setColor(new java.awt.Color(0, 255, 255));
+        g2d.fillRect(0, 0, B_WIDTH, B_HEIGHT);
 
-        g.setColor(Color.GREEN); // Ground
-        g.fillRect(0, 450, getWidth(), 50); // ground at bottom
+        // Fill the grass
+        g2d.setColor(new java.awt.Color(0, 255, 0));
+        g2d.fillRect(0, FLOOR, B_WIDTH, B_HEIGHT - FLOOR);
 
-        // Draw objects
-        cannon.draw(g);
-        cannonball.draw(g);
-    }
+        // Draw the ground line
+        g2d.setColor(java.awt.Color.BLACK);
+        g2d.drawLine(0, FLOOR, B_WIDTH, FLOOR);
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        cannonball.update();
+        // Draw the cannon
+        cannon.draw(g2d); // Draw the cannon using its own method
         repaint();
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        int key = e.getKeyCode();
-        if (key == KeyEvent.VK_UP) {
-            cannon.rotateUp();
-        } else if (key == KeyEvent.VK_DOWN) {
-            cannon.rotateDown();
-        } else if (key == KeyEvent.VK_SPACE) {
-            if (cannonball.getState() == CannonBall.IDLE) {
-                cannonball.launch(cannon.getMuzzleX(), cannon.getMuzzleY(), cannon.getAngle());
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_LEFT -> {
+                System.out.println("Left arrow was pressed.");
+                cannon.rotateLeft(); // Rotate cannon left
+                repaint();
+            }
+            case KeyEvent.VK_RIGHT -> {
+                System.out.println("Right arrow was pressed.");
+                cannon.rotateRight(); // Rotate cannon right
+                repaint();
+            }
+            case KeyEvent.VK_SPACE -> {
+                System.out.println("Spacebar was pressed.");
+                cannon.fire(); // Fire the cannon
             }
         }
     }
