@@ -1,68 +1,59 @@
 package animate;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
 
 public class CannonBall {
-    // Constants
-    private static final double GRAVITY = 9.8; // m/s^2 (can be scaled for visual effect)
-    private static final double SCALE = 30.0; // pixels per meter
+    private int x, y;
+    private double dx, dy;
+    private int state;
+    private long explosionStartTime;
 
-    // State tracking
     public static final int IDLE = 0;
     public static final int FLYING = 1;
     public static final int EXPLODING = 2;
 
-    private int state;
-
-    // Position and velocity (in meters)
-    private double x, y;
-    private double startX, startY;
-    private double vx, vy;
-    private double time;
-
     public CannonBall() {
-        state = IDLE;
+        this.state = IDLE;
+        this.x = 0;
+        this.y = 0;
     }
 
-    // Launch method
-    public void launch(double angleDegrees, double power, double startX, double startY) {
-        this.startX = startX;
-        this.startY = startY;
-
+    public void launch(int startX, int startY, int angle) {
         this.x = startX;
         this.y = startY;
-
-        double angleRadians = Math.toRadians(angleDegrees);
-        vx = power * Math.cos(angleRadians);
-        vy = power * Math.sin(angleRadians);
-
-        time = 0;
-        state = FLYING;
+        this.dx = Math.cos(Math.toRadians(angle)) * 10;
+        this.dy = -Math.sin(Math.toRadians(angle)) * 10;
+        this.state = FLYING;
     }
 
-    // Update position using physics
-    public void updatePosition(double dt) {
+    public void update() {
         if (state == FLYING) {
-            time += dt;
-            x = startX + vx * time;
-            y = startY - (vy * time - 0.5 * GRAVITY * time * time);
+            x += dx;
+            dy += 0.5; // gravity
+            y += dy;
+            if (y > 450) { // ground level
+                state = EXPLODING;
+                explosionStartTime = System.currentTimeMillis();
+            }
+        } else if (state == EXPLODING) {
+            if (System.currentTimeMillis() - explosionStartTime > 1000) {
+                state = IDLE;
+            }
         }
     }
 
     public void draw(Graphics g) {
         if (state == FLYING) {
-            int drawX = (int)(x * SCALE);
-            int drawY = (int)(y * SCALE);
             g.setColor(Color.BLACK);
-            g.fillOval(drawX - 5, drawY - 5, 10, 10);
+            g.fillOval(x - 5, y - 5, 10, 10);
+        } else if (state == EXPLODING) {
+            g.setColor(Color.ORANGE);
+            g.fillOval(x - 15, y - 15, 30, 30);
         }
     }
 
     public int getState() {
         return state;
-    }
-
-    public void setState(int newState) {
-        state = newState;
     }
 }
