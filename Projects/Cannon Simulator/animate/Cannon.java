@@ -67,6 +67,17 @@ public class Cannon {
         playSound(fireSound);
     }
 
+    public void fire(CannonBall ball) {
+        double xOff = 100 * Math.cos(Math.toRadians(angle));
+        double yOff = 100 * Math.sin(Math.toRadians(angle));
+
+        double vx = 30 * Math.cos(Math.toRadians(angle));
+        double vy = 30 * Math.sin(Math.toRadians(angle));
+
+        ball.launch(x + xOff, y + yOff, vx, vy);
+        playSound(fireSound);
+    }
+
     private void playSound(Clip sound) {
         if (sound != null) {
             sound.stop();

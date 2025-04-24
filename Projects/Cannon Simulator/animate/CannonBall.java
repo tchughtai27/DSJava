@@ -1,21 +1,48 @@
 package animate;
 
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.imageio.ImageIO;
+
 public class CannonBall {
+    public double ax;
+    public double ay;
+    public double vx;
+    public double vy;
+    public double x;
+    public double y;
+    public static final int DIAMETER = 20;
+    public double ground;
+    BufferedImage imgFlame;
+
     public enum STATE {
         IDLE,
         FLYING,
         EXPLODING
     }
 
+    public STATE state = STATE.IDLE;
+
     public CannonBall(double ax, double ay, double ground) {
         // public constructor for CannonBall class.
         // takes the acceleration rates (x and y) and the location of the ground (as a
         // double)
         // as arguments
-    }
+        this.ax = ax;
+        this.ay = ay;
+        this.ground = ground;
 
-    private BufferedImage loadImage(String path) {
-        // loads a buffered image (for the flame animation).
+        // get flame
+        try {
+            File file = new File("media/flame.png");
+            imgFlame = ImageIO.read(file);
+
+        } catch (Exception e) {
+            System.err.println("Couldn't load flame image.");
+        }
+
     }
 
     /*
@@ -27,6 +54,16 @@ public class CannonBall {
      * (since we assume the ball is hidden inside the cannon).
      */
     public void draw(Graphics2D g2d) {
+        if (state == STATE.FLYING) {
+            // draw cannonball in air
+            int xpos = (int) x - DIAMETER / 2;
+            int ypos = (int) y - DIAMETER / 2;
+            g2d.fillOval(xpos, ypos, DIAMETER, DIAMETER);
+        } else if (state == STATE.EXPLODING) {
+            // draw image of flame
+            AffineTransform af = new AffineTransform();
+            af.translate(x - 27, y - 17);
+        }
     }
 
     /*
@@ -40,6 +77,19 @@ public class CannonBall {
      * in case the user wants to slow down the animation.
      */
     public void updateBall() {
+        if (state == STATE.FLYING) {
+            // laws of physics to update position
+            vx = vx + ax;
+            x = x + vx;
+            vy = vy + ay;
+            y = y + vy;
+
+            // did it hit the ground
+            if (y > ground) {
+                // exploding state
+                state = STATE.EXPLODING;
+            }
+        }
     }
 
     /*
@@ -48,66 +98,14 @@ public class CannonBall {
      * with the inital velocity of (vx, vy).
      */
     public void launch(double x, double y, double vx, double vy) {
-    }
+        if (state == STATE.FLYING) {
+            return;
+        }
+        this.x = x;
+        this.y = y;
+        this.vx = vx;
+        this.vy = vy;
 
-    /*
-     * Get/set methods for the private member variables.
-     */
-    public STATE getState() {
+        this.state = STATE.FLYING;
     }
-
-    public double getX() {
-    }
-
-    public double getY() {
-    }
-
-    public double getVX() {
-    }
-
-    public double getVY() {
-    }
-
-    public double getAX() {
-    }
-
-    public double getAY() {
-    }
-
-    public double getTimeScale() {
-    }
-
-    public double getGround() {
-    }
-
-    public void setState(STATE newState) {
-    }
-
-    public void setX(double x) {
-    }
-
-    public void setY(double y) {
-    }
-
-    public void setVX(double vx) {
-    }
-
-    public void setVY(double vy) {
-    }
-
-    public void setAX(double ax) {
-    }
-
-    public void setAY(double ay) {
-    }
-
-    public void setTimeScale(double timeScale) {
-    }
-
-    public void changeTimeScale(double delta) {
-    }
-
-    public void setGround(double ground) {
-    }
-
 }

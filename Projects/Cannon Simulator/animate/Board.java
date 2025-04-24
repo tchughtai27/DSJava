@@ -3,6 +3,8 @@ package animate;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Timer;
+import java.util.TimerTask;
 import javax.swing.JPanel;
 
 public class Board extends JPanel implements KeyListener {
@@ -11,6 +13,19 @@ public class Board extends JPanel implements KeyListener {
     private final int FLOOR = B_HEIGHT - 50; // Position of the ground (50 pixels above the bottom)
 
     private Cannon cannon; // Add cannon to the board
+    private CannonBall ball;
+
+    private Timer timer;
+    private final int INITIAL_DELAY = 100;
+    private final int TIMER_INTERVAL = 20;
+
+    private class ScheduledUpdate extends TimerTask {
+        public void run() {
+            ball.updateBall();
+
+            repaint();
+        }
+    }
 
     public Board() {
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
@@ -18,6 +33,12 @@ public class Board extends JPanel implements KeyListener {
         addKeyListener(this); // Add the KeyListener to key events
 
         cannon = new Cannon(60, FLOOR - 60); // Cannon at the bottom-left corner
+
+        // create new ball Changed
+        ball = new CannonBall(0, 1, B_HEIGHT - 60);
+
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new ScheduledUpdate(), INITIAL_DELAY, TIMER_INTERVAL);
     }
 
     @Override
@@ -39,7 +60,9 @@ public class Board extends JPanel implements KeyListener {
 
         // Draw the cannon
         cannon.draw(g2d); // Draw the cannon using its own method
-        repaint();
+
+        // draw CannonBall
+        ball.draw(g2d);
     }
 
     @Override
@@ -57,7 +80,8 @@ public class Board extends JPanel implements KeyListener {
             }
             case KeyEvent.VK_SPACE -> {
                 System.out.println("Spacebar was pressed.");
-                cannon.fire(); // Fire the cannon
+                cannon.fire(ball); // Fire the cannon
+                repaint();
             }
         }
     }
