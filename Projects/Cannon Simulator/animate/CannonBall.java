@@ -1,10 +1,18 @@
 package animate;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class CannonBall {
     public double ax;
@@ -13,9 +21,10 @@ public class CannonBall {
     public double vy;
     public double x;
     public double y;
-    public static final int DIAMETER = 20;
+    public static final int DIAMETER = 10;
     public double ground;
     BufferedImage imgFlame;
+    Clip boom;
 
     public enum STATE {
         IDLE,
@@ -34,15 +43,37 @@ public class CannonBall {
         this.ay = ay;
         this.ground = ground;
 
-        // get flame
+        // get the flame image.
         try {
             File file = new File("media/flame.png");
             imgFlame = ImageIO.read(file);
-
         } catch (Exception e) {
-            System.err.println("Couldn't load flame image.");
+            System.err.println("Couldn't load the flame image.");
         }
 
+        // get soundclip to play the boom.
+        boom = loadSound("media/boom.wav");
+    }
+
+    private Clip loadSound(String path) {
+        try {
+            File soundFile = new File(path);
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioIn);
+            return clip;
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            System.out.println("Error loading sound: " + path);
+            return null;
+        }
+    }
+
+    private void playSound(Clip sound) {
+        if (sound != null) {
+            sound.stop();
+            sound.setFramePosition(0);
+            sound.start();
+        }
     }
 
     /*
@@ -55,14 +86,16 @@ public class CannonBall {
      */
     public void draw(Graphics2D g2d) {
         if (state == STATE.FLYING) {
-            // draw cannonball in air
+            // draw a cannonball in the air.
             int xpos = (int) x - DIAMETER / 2;
             int ypos = (int) y - DIAMETER / 2;
+            g2d.setColor(Color.RED);
             g2d.fillOval(xpos, ypos, DIAMETER, DIAMETER);
         } else if (state == STATE.EXPLODING) {
-            // draw image of flame
+            // draw the image of the flame.
             AffineTransform af = new AffineTransform();
             af.translate(x - 27, y - 17);
+            g2d.drawImage(imgFlame, af, null);
         }
     }
 
@@ -78,16 +111,17 @@ public class CannonBall {
      */
     public void updateBall() {
         if (state == STATE.FLYING) {
-            // laws of physics to update position
+            // use laws of physics to update position.
             vx = vx + ax;
             x = x + vx;
             vy = vy + ay;
             y = y + vy;
 
-            // did it hit the ground
+            // did it hit the ground?
             if (y > ground) {
-                // exploding state
+                // exploding state.
                 state = STATE.EXPLODING;
+                playSound(boom);
             }
         }
     }

@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Timer;
 import java.util.TimerTask;
+
 import javax.swing.JPanel;
 
 public class Board extends JPanel implements KeyListener {
@@ -17,12 +18,18 @@ public class Board extends JPanel implements KeyListener {
 
     private Timer timer;
     private final int INITIAL_DELAY = 100;
-    private final int TIMER_INTERVAL = 20;
+    private final int TIMER_INTERVAL = 20; // msec
 
     private class ScheduledUpdate extends TimerTask {
+        /*
+         * Override the run() method.
+         * Update the position of our ball here.
+         */
         public void run() {
+            // update the ball.
             ball.updateBall();
 
+            // repaint board.
             repaint();
         }
     }
@@ -34,11 +41,12 @@ public class Board extends JPanel implements KeyListener {
 
         cannon = new Cannon(60, FLOOR - 60); // Cannon at the bottom-left corner
 
-        // create new ball Changed
-        ball = new CannonBall(0, 1, B_HEIGHT - 60);
+        // create a new ball.
+        ball = new CannonBall(0, 1, FLOOR);
 
         timer = new Timer();
-        timer.scheduleAtFixedRate(new ScheduledUpdate(), INITIAL_DELAY, TIMER_INTERVAL);
+        timer.scheduleAtFixedRate(new ScheduledUpdate(),
+                INITIAL_DELAY, TIMER_INTERVAL);
     }
 
     @Override
@@ -61,7 +69,7 @@ public class Board extends JPanel implements KeyListener {
         // Draw the cannon
         cannon.draw(g2d); // Draw the cannon using its own method
 
-        // draw CannonBall
+        // draw cannonball;
         ball.draw(g2d);
     }
 
