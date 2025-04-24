@@ -79,7 +79,7 @@ public class Cannon {
         if (image != null) {
             AffineTransform at = new AffineTransform();
 
-            // pivot point of image is at (15, 25.5) in image coordinates
+            // pivot point
             int imgWidth = image.getWidth(null);
             int imgHeight = image.getHeight(null);
             double pivotX = 15;
@@ -89,11 +89,11 @@ public class Cannon {
             at.rotate(Math.toRadians(-angle), pivotX, pivotY);
             g2d.drawImage(image, at, null);
 
-            // Draw the pivot circle (blue)
+            // Draw the circle
             g2d.setColor(Color.BLUE);
             g2d.fillOval((int) (x + pivotX - 5), (int) (y + pivotY - 5), 10, 10);
 
-            // Draw the base (pink triangle with black outline)
+            // Draw the base
             int baseX = (int) (x + pivotX);
             int baseY = (int) (y + pivotY);
             Polygon triangle = new Polygon();

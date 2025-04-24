@@ -20,6 +20,6 @@ public class Triangle {
     }
 
     public static void main(String[] args) {
-        printTriangle(5);
+        printTriangle(1000);
     }
 }

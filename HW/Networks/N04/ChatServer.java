@@ -73,7 +73,7 @@ class ClientHandler implements Runnable {
                 ChatServer.broadcast(name + ": " + message, this);
             }
         } catch (IOException e) {
-            System.err.println("Connection with " + name + " lost.");
+            System.err.println("Connection with " + name + " lost. :(");
         } finally {
             try {
                 ChatServer.broadcast(name + " has left the chat.", this);

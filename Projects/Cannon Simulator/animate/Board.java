@@ -14,10 +14,10 @@ public class Board extends JPanel implements KeyListener {
 
     public Board() {
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
-        setFocusable(true); // Allow this panel to receive keyboard input
-        addKeyListener(this); // Add the KeyListener to handle key events
+        setFocusable(true); // Allows this panel to receive input
+        addKeyListener(this); // Add the KeyListener to key events
 
-        cannon = new Cannon(60, FLOOR - 60); // Instantiate the cannon at the bottom-left corner
+        cannon = new Cannon(60, FLOOR - 60); // Cannon at the bottom-left corner
     }
 
     @Override
