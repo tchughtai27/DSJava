@@ -22,7 +22,7 @@ public class Board extends JPanel {
         interestRateLabel.setBounds(20, 20, 120, 25);
         add(interestRateLabel);
 
-        // TextField for inputting interest rate
+        // Field for inputting interest rate
         interestRateField = new JTextField("5.00");
         interestRateField.setBounds(150, 20, 100, 25);
         add(interestRateField);
@@ -47,7 +47,7 @@ public class Board extends JPanel {
         // Add initial balance to history
         balanceHistoryArea.append("Initial Balance: $1000.00\n");
 
-        // Action listener for the "Add Interest" button
+        // Action listener for the button
         addInterestButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {

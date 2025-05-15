@@ -6,7 +6,7 @@ public class Application extends JFrame {
     public Application(String title) {
         this.setTitle(title);
 
-        // Add the Board panel (which contains UI components)
+        // Add the Board panel
         Board board = new Board();
         this.add(board);
 
